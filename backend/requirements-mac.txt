@@ -1,0 +1,4 @@
+# Только macOS: нативный Apple Vision OCR (Live Text, русский).
+# На Linux/Windows не ставится — api откатывается на tesseract / ручной ввод.
+# Локально на Маке: pip install -r requirements.txt -r requirements-mac.txt
+pyobjc-framework-Vision>=10.0
