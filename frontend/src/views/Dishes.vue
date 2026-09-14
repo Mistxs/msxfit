@@ -117,12 +117,12 @@ async function remove(id) {
 
       <div v-else>
         <h2 style="margin-top: 12px">Ингредиенты</h2>
-        <div v-for="(ing, i) in form.ingredients" :key="i" class="row" style="gap: 6px; margin-bottom: 6px">
-          <select v-model="ing.food_id" style="flex: 2">
+        <div v-for="(ing, i) in form.ingredients" :key="i" class="ing-row" style="margin-bottom: 6px">
+          <select v-model="ing.food_id">
             <option :value="null" disabled>— продукт —</option>
             <option v-for="f in foods" :key="f.id" :value="f.id">{{ f.name }} ({{ f.kcal }} ккал)</option>
           </select>
-          <input type="number" step="1" v-model.number="ing.grams" placeholder="г" style="flex: 1" />
+          <input type="number" step="1" v-model.number="ing.grams" placeholder="г" />
           <button class="ghost" style="padding: 8px 10px" @click="removeIngredient(i)">✕</button>
         </div>
         <button class="ghost" @click="addIngredient">+ ингредиент</button>
@@ -148,7 +148,8 @@ async function remove(id) {
 
     <div class="card">
       <h2>Готовые блюда</h2>
-      <table v-if="dishes.length">
+      <div class="table-wrap" v-if="dishes.length">
+      <table>
         <thead><tr><th>Блюдо</th><th style="text-align:right">ккал/порц</th><th></th></tr></thead>
         <tbody>
           <tr v-for="d in dishes" :key="d.id">
@@ -158,6 +159,7 @@ async function remove(id) {
           </tr>
         </tbody>
       </table>
+      </div>
       <p v-else class="list-empty">Пока нет блюд.</p>
     </div>
   </div>

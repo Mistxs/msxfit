@@ -136,6 +136,31 @@ GET                  /health
 - миграции (Flask-Migrate) и резервное копирование PostgreSQL;
 - iOS-приложение для синхронизации HealthKit → API.
 
+## Deploy (fit.mistxs.ru)
+
+Продакшен: gunicorn (systemd) + nginx + SQLite на сервере `spica` (Debian 13).
+
+**Первый запуск на свежем сервере** (один раз):
+```bash
+ssh mistxs@<server>
+git clone https://github.com/Mistxs/msxfit.git ~/msxfit
+bash ~/msxfit/deploy/first-setup.sh   # apt, venv, build, systemd, nginx, certbot
+```
+Требует: A-запись `fit.mistxs.ru` → публичный IP сервера.
+
+**Обновление** после изменений в коде:
+```bash
+ssh mistxs@<server> 'cd ~/msxfit && ./deploy/deploy.sh'   # git pull → deps → build → restart
+```
+`deploy.sh` НЕ перезаписывает конфиг nginx — чтобы не затереть SSL, добавленный certbot.
+
+Состав:
+- gunicorn: `--workers 1 --threads 4 -b 127.0.0.1:7800 wsgi:app` → `deploy/msxfit.service`
+- nginx: SPA (`frontend/dist`) + прокси `/api` и `/health` → `127.0.0.1:7800` → `deploy/nginx.conf`
+- БД: SQLite (`backend/instance/msxfit.db`); Postgres/Redis — опционально через `.env`
+- HTTPS: Let's Encrypt, авто-renew (`certbot --nginx`)
+- OCR: на сервере (Linux) — через tesseract; Apple Vision — только если бэкенд запущен на macOS
+
 ## Главное правило проекта
 
 Не пытаться сразу сделать всё. Сначала — маленькое приложение, которым реально

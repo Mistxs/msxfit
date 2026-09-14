@@ -51,12 +51,32 @@ a { color: inherit; text-decoration: none; }
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
-.topbar .brand { font-weight: 700; font-size: 18px; }
-.topbar .brand .accent { color: var(--accent); }
+/* Логотип как в msxmusic: inline-flex, flex-shrink:0, nowrap — не сворачивается в две строки. */
+.brand-logo {
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1.1;
+  flex-shrink: 0;
+  white-space: nowrap;
+  user-select: none;
+  font-size: 17px;
+}
+.brand-mistxs {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(118deg, #f0f0ff 0%, #c4b5fd 42%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.brand-sep { margin: 0 7px 0 8px; font-weight: 300; font-size: 0.72em; color: rgba(91,141,239,.5); transform: translateY(-0.06em); }
+.brand-suffix { font-weight: 500; letter-spacing: 0.1em; color: var(--muted); font-size: 0.86em; }
 
 .nav {
   display: flex;
   gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -123,6 +143,15 @@ button.danger { background: var(--bad); }
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); font-size: 14px; }
 th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; }
+
+/* Таблицы скроллятся по горизонтали, не ломая раскладку на узком экране. */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -4px; padding: 0 4px; }
+.table-wrap td { overflow-wrap: break-word; }
+
+/* Строка ингредиента блюда — сетка, не разъезжается на 375px. */
+.ing-row { display: grid; grid-template-columns: 1fr 80px 44px; gap: 6px; align-items: center; }
+.ing-row > * { min-width: 0; }
+@media (max-width: 420px) { .ing-row { grid-template-columns: 1fr 72px 40px; } }
 
 .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 12px; }
 

@@ -76,6 +76,7 @@ const first = computed(() => entries.value[0])
 
     <div class="card" v-if="entries.length">
       <h2>История</h2>
+      <div class="table-wrap">
       <table>
         <thead><tr><th>Дата</th><th>Вес</th><th></th></tr></thead>
         <tbody>
@@ -86,6 +87,7 @@ const first = computed(() => entries.value[0])
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
     <p v-else class="list-empty">Записей пока нет.</p>
   </div>

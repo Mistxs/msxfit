@@ -72,7 +72,8 @@ async function remove(id) {
     <div class="card">
       <h2>Справочник продуктов</h2>
       <input v-model="q" placeholder="Поиск…" @input="load" />
-      <table v-if="foods.length">
+      <div class="table-wrap" v-if="foods.length">
+      <table>
         <thead><tr><th>Название</th><th>ккал</th><th>Б/Ж/У</th><th></th></tr></thead>
         <tbody>
           <tr v-for="f in foods" :key="f.id">
@@ -83,6 +84,7 @@ async function remove(id) {
           </tr>
         </tbody>
       </table>
+      </div>
       <p v-else class="list-empty">Ничего не найдено.</p>
     </div>
   </div>

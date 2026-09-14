@@ -7,13 +7,13 @@ from . import api_bp
 
 @api_bp.get("/foods")
 def list_foods():
-    q = request.args.get("q", "").strip()
-    query = Food.query
+    q = request.args.get("q", "").strip().lower()
+    foods = Food.query.order_by(Food.name).all()
     if q:
-        like = f"%{q}%"
-        query = query.filter(db.or_(Food.name.ilike(like), Food.brand.ilike(like)))
-    foods = query.order_by(Food.name).limit(200).all()
-    return jsonify(foods=[f.to_dict() for f in foods])
+        # Python-side: SQLite LIKE/lower сворачивают только ASCII — для кириллицы
+        # регистронезависимый поиск делаем сами, с правильным Unicode-casefolding.
+        foods = [f for f in foods if q in (f.name or "").lower() or q in (f.brand or "").lower()]
+    return jsonify(foods=[f.to_dict() for f in foods[:200]])
 
 
 @api_bp.post("/foods")

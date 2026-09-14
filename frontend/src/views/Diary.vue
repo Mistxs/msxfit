@@ -131,6 +131,7 @@ const mealsWithItems = computed(() => mealTypes.filter((m) => (groups.value[m.ke
 
     <div class="card" v-for="m in mealsWithItems" :key="m.key">
       <h2>{{ m.label }}</h2>
+      <div class="table-wrap">
       <table>
         <thead>
           <tr><th>Что</th><th style="text-align:right">г</th><th style="text-align:right">ккал</th><th style="text-align:right">Б</th><th></th></tr>
@@ -145,6 +146,7 @@ const mealsWithItems = computed(() => mealTypes.filter((m) => (groups.value[m.ke
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <p v-if="diary && !mealTypes.some((m) => groups[m.key]?.length)" class="list-empty">Пока ничего не записано.</p>

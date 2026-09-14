@@ -5,7 +5,9 @@ import { todayISO } from './api.js'
 <template>
   <div class="app-shell">
     <header class="topbar">
-      <div class="brand">mistxs<span class="accent"> | fitness</span></div>
+      <div class="brand-logo">
+        <span class="brand-mistxs">mistxs</span><span class="brand-sep">|</span><span class="brand-suffix">fitness</span>
+      </div>
       <nav class="nav">
         <RouterLink to="/">Сегодня</RouterLink>
         <RouterLink to="/diary">Дневник</RouterLink>
