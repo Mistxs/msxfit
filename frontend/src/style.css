@@ -35,7 +35,7 @@ a { color: inherit; text-decoration: none; }
 .app-shell {
   max-width: 680px;
   margin: 0 auto;
-  padding: 0 14px 64px;
+  padding: 0 14px calc(92px + env(safe-area-inset-bottom));
 }
 
 .topbar {
@@ -164,3 +164,41 @@ th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: upp
 .hint { font-size: 13px; color: var(--muted); }
 
 .err { color: var(--bad); font-size: 14px; }
+
+/* Нижнее меню (iOS-style tab bar) */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: flex; justify-content: space-around; align-items: stretch;
+  background: rgba(15, 17, 21, 0.94);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab {
+  flex: 1 1 0; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  padding: 8px 2px 6px;
+  color: var(--muted); background: none; border: none; cursor: pointer;
+  font-family: inherit; font-size: 10.5px; font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+  transition: color .15s, transform .12s cubic-bezier(.2, 0, 0, 1);
+}
+.tab .tab-ico { font-size: 20px; line-height: 1; }
+.tab.router-link-active, .tab.active { color: var(--accent); }
+.tab:active { transform: scale(0.92); }
+.more-backdrop { position: fixed; inset: 0; z-index: 49; }
+.more-panel {
+  position: fixed; right: 10px;
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  z-index: 51; min-width: 176px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 14px; box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5); padding: 6px;
+}
+.more-item {
+  display: block; padding: 11px 12px; border-radius: 10px;
+  color: var(--text); font-size: 14px; font-weight: 600;
+}
+.more-item:active { background: var(--surface); }
+@media (min-width: 700px) {
+  .more-panel { right: calc(50% - 340px + 10px); }
+}
